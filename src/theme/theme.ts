@@ -36,6 +36,11 @@ interface Color {
   primaryRedHex: string;
   primaryOrangeHex: string;
   primaryBlackHex: string;
+  Cyan: string;
+  TurquoiseBlue: string;
+  Azure: string;
+  MidnightGreen: string;
+  LightCyan: string;
   primaryDarkGreyHex: string;
   secondaryDarkGreyHex: string;
   primaryGreyHex: string;
@@ -51,6 +56,11 @@ export const COLORS: Color = {
   primaryRedHex: '#DC3535',
   primaryOrangeHex: '#D17842',
   primaryBlackHex: '#0C0F14',
+  Cyan: '#00ffff',
+  TurquoiseBlue: '#00ffef',
+  Azure: '#f0ffff',
+  MidnightGreen: '#004953',
+  LightCyan: '#e0ffff',
   primaryDarkGreyHex: '#141921',
   secondaryDarkGreyHex: '#21262E',
   primaryGreyHex: '#252A32',
