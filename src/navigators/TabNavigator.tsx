@@ -34,7 +34,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
               name="home"
-              size={focused ? 30 : 25}
+              size={focused ? 32 : 25}
               color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
             />
           ),
@@ -47,7 +47,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
               name="cart"
-              size={focused ? 30 : 25}
+              size={focused ? 32 : 25}
               color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
             />
           ),
@@ -60,7 +60,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
               name="like"
-              size={focused ? 30 : 25}
+              size={focused ? 32 : 25}
               color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
             />
           ),
@@ -73,7 +73,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
               name="bell"
-              size={focused ? 30 : 25}
+              size={focused ? 32 : 25}
               color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
             />
           ),
