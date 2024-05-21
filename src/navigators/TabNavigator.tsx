@@ -23,7 +23,6 @@ const TabNavigator = () => {
           <BlurView
             overlayColor=""
             blurAmount={10}
-            style={styles.BlurViewStyles}
           />
         ),
       }}>
@@ -34,7 +33,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
               name="home"
-              size={focused ? 32 : 25}
+              size={focused ? 37 : 25}
               color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
             />
           ),
@@ -47,7 +46,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
               name="cart"
-              size={focused ? 32 : 25}
+              size={focused ? 37 : 25}
               color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
             />
           ),
@@ -60,7 +59,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
               name="like"
-              size={focused ? 32 : 25}
+              size={focused ? 37 : 25}
               color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
             />
           ),
@@ -73,7 +72,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
               name="bell"
-              size={focused ? 32 : 25}
+              size={focused ? 37 : 25}
               color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
             />
           ),
@@ -87,10 +86,11 @@ const styles = StyleSheet.create({
   tabBarStyle: {
     height: 80,
     position: 'absolute',
-    backgroundColor: COLORS.MidnightGreen,
-    borderRadius: 20,
+    backgroundColor: COLORS.WoodBrown,
     elevation: 0,
     borderTopColor: 'transparent',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   BlurViewStyles: {
     position: 'absolute',

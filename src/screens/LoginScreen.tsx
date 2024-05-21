@@ -14,10 +14,29 @@ const LoginScreen = () => {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
+  const checkAndAddEmailToAPI = async (email: string) => {
+    try {
+      const response = await fetch(`https://6606e9f2be53febb857ee01e.mockapi.io/Coffeeshop?email=${email}`);
+      const data = await response.json();
+      if (data.length === 0) {
+        await fetch('https://6606e9f2be53febb857ee01e.mockapi.io/Coffeeshop', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        });
+      }
+    } catch (error) {
+      console.error('Error checking or adding email to API:', error);
+    }
+  };
+
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigation.navigate('Home');
+      await checkAndAddEmailToAPI(email);
+      navigation.navigate('Tab'); // Navigate to TabNavigator which contains the HomeScreen
     } catch (error: any) {
       Alert.alert("Login Error", error.message);
     }
