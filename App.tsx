@@ -13,6 +13,8 @@ import { AuthProvider, useAuth } from './src/screens/AuthContext';
 import EditUserProfile from './src/screens/EditUserProfile';
 import EditAPI from './src/screens/EditAPI';
 import UserProfile from './src/screens/UserProfile';
+import LocationScreen1 from './src/screens/LocationScreen1';
+import EnterLocationManually from './src/screens/EnterLocationManually';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -23,6 +25,8 @@ export type RootStackParamList = {
   EditUserProfile: undefined;
   EditAPI: undefined;
   UserProfile: undefined;
+  LocationScreen1: undefined;
+  EnterLocationManually: undefined;
 };
 
 const Stack = createNativeStackNavigator();
@@ -55,6 +59,8 @@ const AppNavigator = () => {
         <Stack.Screen name="EditUserProfile" component={EditUserProfile} />
         <Stack.Screen name="EditAPI" component={EditAPI} />
         <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Screen name="LocationScreen1" component={LocationScreen1} />
+        <Stack.Screen name="EnterLocationManually" component={EnterLocationManually} />
       </Stack.Navigator>
     </NavigationContainer>
   );

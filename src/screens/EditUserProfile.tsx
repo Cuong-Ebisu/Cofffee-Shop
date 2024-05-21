@@ -63,6 +63,10 @@ const EditUserProfile = () => {
     }
   };
 
+  const handleLocationAccess = () => {
+    navigation.navigate('LocationScreen1');
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
@@ -96,6 +100,9 @@ const EditUserProfile = () => {
       <TouchableOpacity style={styles.genderSelect} onPress={() => setModalVisible(true)}>
         <Text style={styles.genderText}>{gender ? gender : 'Select Gender'}</Text>
         <Image source={require('../assets/app_images/icons8-dropdown-50.png')} style={styles.dropdownIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.locationButton} onPress={handleLocationAccess}>
+        <Text style={styles.locationButtonText}>Access Location Settings</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.completeButton} onPress={handleCompleteProfile}>
         <Text style={styles.completeButtonText}>Complete Profile</Text>
@@ -207,6 +214,19 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     tintColor: COLORS.lightGrey,
+  },
+  locationButton: {
+    height: 50,
+    borderRadius: SPACING.space_10,
+    backgroundColor: COLORS.WoodBrown, // You can change the color as needed
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: SPACING.space_20,
+  },
+  locationButtonText: {
+    fontSize: FONTSIZE.size_16,
+    fontFamily: FONTFAMILY.bold,
+    color: COLORS.white,
   },
   completeButton: {
     height: 50,
