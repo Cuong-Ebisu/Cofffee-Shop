@@ -15,6 +15,7 @@ import EditAPI from './src/screens/EditAPI';
 import UserProfile from './src/screens/UserProfile';
 import LocationScreen1 from './src/screens/LocationScreen1';
 import EnterLocationManually from './src/screens/EnterLocationManually';
+import Introduction1 from './src/screens/Introduction1';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -27,6 +28,7 @@ export type RootStackParamList = {
   UserProfile: undefined;
   LocationScreen1: undefined;
   EnterLocationManually: undefined;
+  Introduction: undefined; 
 };
 
 const Stack = createNativeStackNavigator();
@@ -40,11 +42,11 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Introduction" screenOptions={{ headerShown: false }}>
         {!user ? (
           <>
             
-            <Stack.Screen name="Signup" component={SignupScreen} />
+            
             
           </>
         ) : (
@@ -54,6 +56,7 @@ const AppNavigator = () => {
             <Stack.Screen name="Payment" component={PaymentScreen} options={{ animation: 'slide_from_right' }} />
           </>
         )}
+        <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Verify" component={VerifyScreen} />
         <Stack.Screen name="EditUserProfile" component={EditUserProfile} />
@@ -61,6 +64,7 @@ const AppNavigator = () => {
         <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="LocationScreen1" component={LocationScreen1} />
         <Stack.Screen name="EnterLocationManually" component={EnterLocationManually} />
+        <Stack.Screen name="Introduction" component={Introduction1} /> 
       </Stack.Navigator>
     </NavigationContainer>
   );

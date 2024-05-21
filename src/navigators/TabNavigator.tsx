@@ -34,7 +34,7 @@ const TabNavigator = () => {
             <CustomIcon
               name="home"
               size={focused ? 37 : 25}
-              color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
+              color={focused ? COLORS.CosmicLatte : COLORS.LightCyan}
             />
           ),
         }}
@@ -47,7 +47,7 @@ const TabNavigator = () => {
             <CustomIcon
               name="cart"
               size={focused ? 37 : 25}
-              color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
+              color={focused ? COLORS.CosmicLatte : COLORS.LightCyan}
             />
           ),
         }}
@@ -60,7 +60,7 @@ const TabNavigator = () => {
             <CustomIcon
               name="like"
               size={focused ? 37 : 25}
-              color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
+              color={focused ? COLORS.CosmicLatte : COLORS.LightCyan}
             />
           ),
         }}
@@ -73,7 +73,7 @@ const TabNavigator = () => {
             <CustomIcon
               name="bell"
               size={focused ? 37 : 25}
-              color={focused ? COLORS.TurquoiseBlue : COLORS.LightCyan}
+              color={focused ? COLORS.CosmicLatte : COLORS.LightCyan}
             />
           ),
         }}
