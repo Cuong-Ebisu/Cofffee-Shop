@@ -1,24 +1,36 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
 import {COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import GradientBGIcon from './GradientBGIcon';
 import ProfilePic from './ProfilePic';
+import SideMenu from './SideMenu';
 
 interface HeaderBarProps {
   title?: string;
 }
 
 const HeaderBar: React.FC<HeaderBarProps> = ({title}) => {
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
   return (
-    <View style={styles.HeaderContainer}>
-      <GradientBGIcon
-        name="menu"
-        color={COLORS.primaryLightGreyHex}
-        size={FONTSIZE.size_16}
-      />
-      <Text style={styles.HeaderText}>{title}</Text>
-      <ProfilePic />
-    </View>
+    <>
+      <View style={styles.HeaderContainer}>
+        <TouchableOpacity onPress={toggleMenu}>
+          <GradientBGIcon
+            name="menu"
+            color={COLORS.primaryLightGreyHex}
+            size={FONTSIZE.size_16}
+          />
+        </TouchableOpacity>
+        <Text style={styles.HeaderText}>{title}</Text>
+        <ProfilePic />
+      </View>
+      {isMenuVisible && <SideMenu onClose={toggleMenu} />}
+    </>
   );
 };
 

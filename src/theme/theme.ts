@@ -13,6 +13,8 @@ interface Spacing {
   space_30: number;
   space_32: number;
   space_36: number;
+  space_40: number;
+  space_50: number;
 }
 
 export const SPACING: Spacing = {
@@ -30,6 +32,8 @@ export const SPACING: Spacing = {
   space_30: 30,
   space_32: 32,
   space_36: 36,
+  space_40: 40,
+  space_50: 50,
 };
 
 interface Color {
@@ -50,6 +54,14 @@ interface Color {
   primaryWhiteHex: string;
   primaryBlackRGBA: string;
   secondaryBlackRGBA: string;
+  WhiteSmoke: string;
+  WoodBrown: string;
+  primary: string;
+  white: string;
+  black: string;
+  lightGrey: string;
+  darkGrey: string;
+  OtterBrown: string;
 }
 
 export const COLORS: Color = {
@@ -70,6 +82,14 @@ export const COLORS: Color = {
   primaryWhiteHex: '#FFFFFF',
   primaryBlackRGBA: 'rgba(12,15,20,0.5)',
   secondaryBlackRGBA: 'rgba(0,0,0,0.7)',
+  WhiteSmoke: "#f5f5f5",
+  WoodBrown: '#c19a6b',
+  primary: '#00695C',
+  white: '#FFFFFF',
+  black: '#000000',
+  lightGrey: '#D3D3D3',
+  darkGrey: '#808080',
+  OtterBrown: '#654321'
 };
 
 interface FontFamily {
@@ -82,6 +102,8 @@ interface FontFamily {
   poppins_regular: string;
   poppins_semibold: string;
   poppins_thin: string;
+  regular: string;
+  bold: string;
 }
 
 export const FONTFAMILY: FontFamily = {
@@ -94,6 +116,8 @@ export const FONTFAMILY: FontFamily = {
   poppins_regular: 'Poppins-Regular',
   poppins_semibold: 'Poppins-SemiBold',
   poppins_thin: 'Poppins-Thin',
+  regular: 'Arial-Regular',
+  bold: 'Arial-Bold',
 };
 
 interface FontSize {

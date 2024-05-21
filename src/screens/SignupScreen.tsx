@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Alert, ImageBackground, TouchableWithoutFeedback, Keyboard
-} from 'react-native';
-import {
-  createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, deleteUser
-} from 'firebase/auth';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Alert, ImageBackground, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { sendEmailVerification } from 'firebase/auth';
 import { auth } from './firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../App';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 type SignupScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Signup'>;
 
@@ -16,7 +13,7 @@ const SignupScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [passwordVisibility, setPasswordVisibility] = useState(true);
   const navigation = useNavigation<SignupScreenNavigationProp>();
 
   const validatePassword = (password: string) => {
@@ -24,79 +21,86 @@ const SignupScreen = () => {
     return regex.test(password);
   };
 
-  useEffect(() => {
-    return onAuthStateChanged(auth, user => {
-      if (user && user.emailVerified) {
-        navigation.navigate('Login');
-      }
-    }); // Return the unsubscribe function from onAuthStateChanged
-  }, []);
+  const generateOtp = () => {
+    return Math.floor(1000 + Math.random() * 9000).toString(); // Tạo OTP ngẫu nhiên
+  };
 
   const handleSignup = async () => {
     if (password !== confirmPassword) {
-      setError("Passwords don't match");
+      Alert.alert("Signup Error", "Passwords do not match");
       return;
     }
+
     if (!validatePassword(password)) {
-      setError("Password must be at least 6 characters long and include letters, numbers, and special characters.");
+      Alert.alert("Signup Error", "Password must contain letters, numbers, and special characters");
       return;
     }
+
     try {
+      const otp = generateOtp();
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      if (userCredential.user) {
-        await sendEmailVerification(userCredential.user);
-        Alert.alert(
-          "Verification Email Sent",
-          "Please check your email to verify your account.",
-          [
-            {
-              text: "OK",
-              onPress: () => navigation.navigate('Login'), // Ensure we navigate back to login
-            },
-          ]
-        );
-      }
+      await sendEmailVerification(userCredential.user);
+      Alert.alert("Verification Email Sent", `Please check your email for the verification code. OTP: ${otp}`);
+      navigation.navigate('Verify', { email, otp });
     } catch (error: any) {
-      setError(error.message);
-      if (error.code === 'auth/email-already-in-use' && auth.currentUser) {
-        await deleteUser(auth.currentUser); // Delete unverified user attempt
-      }
+      Alert.alert("Signup Error", error.message);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisibility(!passwordVisibility);
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ImageBackground
+      <ImageBackground 
         source={require('../assets/app_images/coffeeLogin3.jpg')}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
         <View style={styles.container}>
-          <View style={styles.loginContainer}>
+          <View style={styles.signupContainer}>
             <Text style={styles.header}>Sign Up</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              onChangeText={setEmail}
-              value={email}
-              autoCapitalize="none"
-            />
-            <TextInput
-              style={styles.input}
-placeholder="Password"
-              onChangeText={setPassword}
-              value={password}
-              secureTextEntry
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm Password"
-              onChangeText={setConfirmPassword}
-              value={confirmPassword}
-              secureTextEntry
-            />
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setEmail}
+                value={email}
+                placeholder="Enter your email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setPassword}
+                value={password}
+                placeholder="Enter your password"
+                secureTextEntry={passwordVisibility}
+                autoCapitalize="none"
+              />
+              <TouchableOpacity onPress={togglePasswordVisibility} style={styles.visibilityBtn}>
+                <Text style={styles.visibilityText}>{passwordVisibility ? 'Show' : 'Hide'}</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setConfirmPassword}
+                value={confirmPassword}
+                placeholder="Confirm your password"
+                secureTextEntry={passwordVisibility}
+                autoCapitalize="none"
+              />
+            </View>
             <Button color="#836953" title="Sign Up" onPress={handleSignup} />
-            {error ? <Text style={styles.errorText}>{error}</Text> : null}
+            <View style={styles.loginContainer}>
+              <Text style={styles.loginText}>Already have an account? </Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.loginButton}>Log in</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ImageBackground>
@@ -114,29 +118,50 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loginContainer: {
+  signupContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     padding: 20,
     width: '90%',
     borderRadius: 10,
   },
   header: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 28,
+    marginBottom: 10,
     fontWeight: 'bold',
   },
+  inputGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   input: {
-    width: '100%',
+    width: '85%',
     marginVertical: 10,
     padding: 15,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
+    flex: 1,
   },
-  errorText: {
-    color: 'red',
-    marginTop: 10,
+  visibilityBtn: {
+    marginLeft: 10,
   },
+  visibilityText: {
+    color: '#836953',
+    fontWeight: 'bold',
+  },
+  loginContainer: {
+    flexDirection: 'row',
+    marginTop: 15,
+  },
+  loginText: {
+    fontSize: 16,
+  },
+  loginButton: {
+    fontSize: 16,
+    color: '#836953',
+    fontWeight: 'bold',
+  }
 });
 
 export default SignupScreen;
+
