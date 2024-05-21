@@ -22,7 +22,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({title}) => {
         <TouchableOpacity onPress={toggleMenu}>
           <GradientBGIcon
             name="menu"
-            color={COLORS.primaryLightGreyHex}
+            color={COLORS.WhiteSmoke}
             size={FONTSIZE.size_16}
           />
         </TouchableOpacity>
@@ -36,7 +36,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({title}) => {
 
 const styles = StyleSheet.create({
   HeaderContainer: {
-    padding: SPACING.space_30,
+    padding: SPACING.space_20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

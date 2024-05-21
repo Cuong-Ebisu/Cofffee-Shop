@@ -14,6 +14,7 @@ interface Spacing {
   space_32: number;
   space_36: number;
   space_40: number;
+  space_45: number;
   space_50: number;
 }
 
@@ -33,6 +34,7 @@ export const SPACING: Spacing = {
   space_32: 32,
   space_36: 36,
   space_40: 40,
+  space_45: 45,
   space_50: 50,
 };
 
@@ -62,6 +64,9 @@ interface Color {
   lightGrey: string;
   darkGrey: string;
   OtterBrown: string;
+  AliceBlue: string;
+  SpanishBistre: string;
+  CosmicLatte: string;
 }
 
 export const COLORS: Color = {
@@ -89,7 +94,10 @@ export const COLORS: Color = {
   black: '#000000',
   lightGrey: '#D3D3D3',
   darkGrey: '#808080',
-  OtterBrown: '#654321'
+  OtterBrown: '#654321',
+  AliceBlue: '#f0f8ff',
+  SpanishBistre: '#80755a',
+  CosmicLatte: '#fff8e7',
 };
 
 interface FontFamily {

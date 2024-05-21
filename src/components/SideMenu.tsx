@@ -35,31 +35,47 @@ const SideMenu: React.FC<SideMenuProps> = ({ onClose }) => {
   };
 
   return (
-    <View style={styles.SideMenuContainer}>
-      <TouchableOpacity style={styles.CloseButton} onPress={onClose}>
+    <View style={styles.sideMenuContainer}>
+      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image
           source={require('../assets/app_images/icons8-left-arrow-100.png')}  // Adjust the path as necessary
-          style={styles.CloseButtonIcon}
+          style={styles.closeButtonIcon}
         />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.MenuItem} onPress={handleUserProfile}>
-        <Text style={styles.MenuItemText}>User Profile</Text>
+      <TouchableOpacity style={styles.menuItem} onPress={handleUserProfile}>
+        <Image
+          source={require('../assets/app_images/icons8-user-profile-100.png')}  // Adjust the path as necessary
+          style={styles.menuItemIcon}
+        />
+        <Text style={styles.menuItemText}>User Profile</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.MenuItem} onPress={handleEditProfile}>
-        <Text style={styles.MenuItemText}>Edit Profile</Text>
+      <TouchableOpacity style={styles.menuItem} onPress={handleEditProfile}>
+        <Image
+          source={require('../assets/app_images/icons8-edit-property-100.png')}  // Adjust the path as necessary
+          style={styles.menuItemIcon}
+        />
+        <Text style={styles.menuItemText}>Edit Profile</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.MenuItem} onPress={handleEditAPI}>
-        <Text style={styles.MenuItemText}>Edit API</Text>
+      <TouchableOpacity style={styles.menuItem} onPress={handleEditAPI}>
+        <Image
+          source={require('../assets/app_images/icons8-rest-api-100.png')}  // Adjust the path as necessary
+          style={styles.menuItemIcon}
+        />
+        <Text style={styles.menuItemText}>Edit API</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.MenuItem} onPress={handleLogout}>
-        <Text style={styles.MenuItemText}>Logout</Text>
+      <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
+        <Image
+          source={require('../assets/app_images/icons8-logout-100.png')}  // Adjust the path as necessary
+          style={styles.menuItemIcon}
+        />
+        <Text style={styles.menuItemText}>Logout</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  SideMenuContainer: {
+  sideMenuContainer: {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -69,20 +85,32 @@ const styles = StyleSheet.create({
     padding: SPACING.space_20,
     zIndex: 1000,
   },
-  CloseButton: {
+  closeButton: {
     alignSelf: 'flex-end',
     marginBottom: SPACING.space_20,
   },
-  CloseButtonIcon: {
+  closeButtonIcon: {
     width: SPACING.space_36,
     height: SPACING.space_36,
   },
-  MenuItem: {
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: SPACING.space_20,
+    paddingVertical: SPACING.space_10,
+    paddingHorizontal: SPACING.space_15,
+    borderRadius: SPACING.space_10,
+    backgroundColor: COLORS.primaryWhiteHex,
   },
-  MenuItemText: {
+  menuItemIcon: {
+    width: SPACING.space_24,
+    height: SPACING.space_24,
+    marginRight: SPACING.space_10,
+  },
+  menuItemText: {
     fontSize: FONTSIZE.size_18,
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.primaryGreyHex,
+    fontWeight: 'bold',
   },
 });
 

@@ -51,7 +51,7 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
       start={{x: 0, y: 0}}
       end={{x: 1, y: 1}}
       style={styles.CardLinearGradientContainer}
-      colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}>
+      colors={[COLORS.WoodBrown, COLORS.WhiteSmoke]}>
       <ImageBackground
         source={imagelink_square}
         style={styles.CardImageBG}
@@ -129,12 +129,12 @@ const styles = StyleSheet.create({
   },
   CardTitle: {
     fontFamily: FONTFAMILY.poppins_medium,
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.SpanishBistre,
     fontSize: FONTSIZE.size_16,
   },
   CardSubtitle: {
     fontFamily: FONTFAMILY.poppins_light,
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.SpanishBistre,
     fontSize: FONTSIZE.size_10,
   },
   CardFooterRow: {
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_18,
   },
   CardPrice: {
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.SpanishBistre,
   },
 });
 

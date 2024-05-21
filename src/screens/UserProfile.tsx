@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ActivityIndicator, ImageBackground } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { COLORS, SPACING, FONTSIZE, FONTFAMILY } from '../theme/theme';
-import { RootStackParamList } from '../../App';  // Adjust the path as necessary
+import { RootStackParamList } from '../../App'; // Adjust the path as necessary
 import { useAuth } from './AuthContext';
 
 const UserProfile = () => {
@@ -61,19 +61,29 @@ const UserProfile = () => {
           <Image source={require('../assets/app_images/icons8-left-arrow-100.png')} style={styles.backIcon} />
         </TouchableOpacity>
         {profileData ? (
-          <>
-            <View style={styles.profileContainer}>
-              <Image source={profileData.avatar ? { uri: profileData.avatar } : require('../assets/app_images/account1.jpg')} style={styles.avatar} />
-              <Text style={styles.name}>{profileData.name}</Text>
-              <Text style={styles.email}>{profileData.email}</Text>
-              <Text style={styles.phone}>{profileData.phoneNumber}</Text>
-              <Text style={styles.address}>{profileData.address}</Text>
-              <Text style={styles.gender}>{profileData.gender}</Text>
-              <TouchableOpacity style={styles.editButton} onPress={handleEditProfile}>
-                <Text style={styles.editButtonText}>Edit Profile</Text>
-              </TouchableOpacity>
+          <View style={styles.profileContainer}>
+            <Image source={profileData.avatar ? { uri: profileData.avatar } : require('../assets/app_images/account1.jpg')} style={styles.avatar} />
+            <Text style={styles.name}>{profileData.name}</Text>
+            <View style={styles.infoContainer}>
+              <Text style={styles.label}>Email:</Text>
+              <Text style={styles.value}>{profileData.email}</Text>
             </View>
-          </>
+            <View style={styles.infoContainer}>
+              <Text style={styles.label}>Phone Number:</Text>
+              <Text style={styles.value}>{profileData.phoneNumber}</Text>
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.label}>Address:</Text>
+              <Text style={styles.value}>{profileData.address}</Text>
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.label}>Gender:</Text>
+              <Text style={styles.value}>{profileData.gender}</Text>
+            </View>
+            <TouchableOpacity style={styles.editButton} onPress={handleEditProfile}>
+              <Text style={styles.editButtonText}>Edit Profile</Text>
+            </TouchableOpacity>
+          </View>
         ) : (
           <Text style={styles.errorText}>No profile data found.</Text>
         )}
@@ -91,6 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: SPACING.space_20,
   },
   backButton: {
     position: 'absolute',
@@ -107,59 +118,67 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    padding: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    padding: SPACING.space_20,
     width: '90%',
-    borderRadius: 10,
+    borderRadius: SPACING.space_10,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   avatar: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    marginBottom: 20,
+    marginBottom: SPACING.space_20,
     backgroundColor: COLORS.lightGrey,
   },
   name: {
-    fontSize: 28,
+    fontSize: FONTSIZE.size_28,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: SPACING.space_20,
+    color: COLORS.black,
   },
-  email: {
-    fontSize: 16,
-    color: COLORS.OtterBrown,
-    marginBottom: 10,
+  infoContainer: {
+    flexDirection: 'row',
+    marginBottom: SPACING.space_10,
+    justifyContent: 'flex-start',
+    width: '100%',
   },
-  phone: {
-    fontSize: 16,
+  label: {
+    fontSize: FONTSIZE.size_16,
+    fontWeight: 'bold',
     color: COLORS.OtterBrown,
-    marginBottom: 10,
+    marginRight: SPACING.space_10,
+    width: '30%',
   },
-  address: {
-    fontSize: 16,
+  value: {
+    fontSize: FONTSIZE.size_16,
     color: COLORS.OtterBrown,
-    marginBottom: 10,
-  },
-  gender: {
-    fontSize: 16,
-    color: COLORS.OtterBrown,
-    marginBottom: 30,
+    width: '70%',
   },
   editButton: {
     height: 50,
     width: '100%',
-    borderRadius: 5,
+    borderRadius: SPACING.space_10,
     backgroundColor: COLORS.WoodBrown,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: SPACING.space_20,
   },
   editButtonText: {
-    fontSize: 16,
+    fontSize: FONTSIZE.size_16,
     fontWeight: 'bold',
     color: COLORS.white,
   },
   errorText: {
-    fontSize: 16,
+    fontSize: FONTSIZE.size_16,
     color: COLORS.WoodBrown,
     textAlign: 'center',
   },

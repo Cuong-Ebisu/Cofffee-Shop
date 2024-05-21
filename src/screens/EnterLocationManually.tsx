@@ -64,10 +64,17 @@ const EnterLocationManually = () => {
     navigation.navigate('LocationScreen1');
   };
 
+  const handleNavigateToTab = () => {
+    navigation.navigate('Tab');
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
         <Image source={require('../assets/app_images/icons8-left-arrow-100.png')} style={styles.backIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.homeButton} onPress={handleNavigateToTab}>
+        <Image source={require('../assets/app_images/icons8-home-100.png')} style={styles.homeIcon} />
       </TouchableOpacity>
       <View style={styles.iconContainer}>
         <Image
@@ -141,6 +148,15 @@ const styles = StyleSheet.create({
   backIcon: {
     width: 50,
     height: 50,
+  },
+  homeButton: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+  },
+  homeIcon: {
+    width: 45,
+    height:45,
   },
   iconContainer: {
     marginBottom: 20,
