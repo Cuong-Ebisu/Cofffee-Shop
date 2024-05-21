@@ -38,6 +38,10 @@ const UserProfile = () => {
     navigation.navigate('EditUserProfile');
   };
 
+  const handleBackPress = () => {
+    navigation.navigate('Tab');
+  };
+
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
@@ -53,6 +57,9 @@ const UserProfile = () => {
       resizeMode="cover"
     >
       <View style={styles.container}>
+        <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
+          <Image source={require('../assets/app_images/icons8-left-arrow-100.png')} style={styles.backIcon} />
+        </TouchableOpacity>
         {profileData ? (
           <>
             <View style={styles.profileContainer}>
@@ -60,6 +67,7 @@ const UserProfile = () => {
               <Text style={styles.name}>{profileData.name}</Text>
               <Text style={styles.email}>{profileData.email}</Text>
               <Text style={styles.phone}>{profileData.phoneNumber}</Text>
+              <Text style={styles.address}>{profileData.address}</Text>
               <Text style={styles.gender}>{profileData.gender}</Text>
               <TouchableOpacity style={styles.editButton} onPress={handleEditProfile}>
                 <Text style={styles.editButtonText}>Edit Profile</Text>
@@ -83,6 +91,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+  },
+  backIcon: {
+    width: 50,
+    height: 50,
   },
   loaderContainer: {
     flex: 1,
@@ -114,6 +131,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   phone: {
+    fontSize: 16,
+    color: COLORS.OtterBrown,
+    marginBottom: 10,
+  },
+  address: {
     fontSize: 16,
     color: COLORS.OtterBrown,
     marginBottom: 10,
