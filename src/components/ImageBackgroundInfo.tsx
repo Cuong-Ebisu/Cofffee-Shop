@@ -27,7 +27,7 @@ interface ImageBackgroundInfoProps {
   special_ingredient: string;
   ingredients: string;
   average_rating: number;
-  ratings_count: string;
+  ratings_count: number;
   roasted: string;
   BackHandler?: any;
   ToggleFavourite: any;
@@ -61,7 +61,7 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
               }}>
               <GradientBGIcon
                 name="left"
-                color={COLORS.primaryLightGreyHex}
+                color={COLORS.SpanishBistre}
                 size={FONTSIZE.size_16}
               />
             </TouchableOpacity>
@@ -72,7 +72,7 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
               <GradientBGIcon
                 name="like"
                 color={
-                  favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
+                  favourite ? COLORS.primaryRedHex : COLORS.SpanishBistre
                 }
                 size={FONTSIZE.size_16}
               />
@@ -87,7 +87,7 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
               <GradientBGIcon
                 name="like"
                 color={
-                  favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
+                  favourite ? COLORS.primaryRedHex : COLORS.SpanishBistre
                 }
                 size={FONTSIZE.size_16}
               />
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   ImageInfoOuterContainer: {
     paddingVertical: SPACING.space_24,
     paddingHorizontal: SPACING.space_30,
-    backgroundColor: COLORS.primaryBlackRGBA,
+    backgroundColor: COLORS.primaryLightSpanishBistre,
     borderTopLeftRadius: BORDERRADIUS.radius_20 * 2,
     borderTopRightRadius: BORDERRADIUS.radius_20 * 2,
   },
@@ -210,7 +210,9 @@ const styles = StyleSheet.create({
     borderRadius: BORDERRADIUS.radius_15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.primaryBlackHex,
+    backgroundColor: COLORS.SpanishBistre,
+    borderWidth: 2,
+    borderColor: COLORS.WoodBrown,
   },
   PropertyTextFirst: {
     fontFamily: FONTFAMILY.poppins_medium,
@@ -244,7 +246,9 @@ const styles = StyleSheet.create({
     borderRadius: BORDERRADIUS.radius_15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.primaryBlackHex,
+    backgroundColor: COLORS.SpanishBistre,
+    borderWidth: 2,
+    borderColor: COLORS.WoodBrown,
   },
   RoastedText: {
     fontFamily: FONTFAMILY.poppins_regular,

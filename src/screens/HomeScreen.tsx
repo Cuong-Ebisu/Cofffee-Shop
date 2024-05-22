@@ -50,6 +50,24 @@ const getCoffeeList = (category: string, data: any) => {
   }
 };
 
+const calculateAverageRatings = (data: any) => {
+  const ratings: { [key: string]: { sum: number; count: number } } = {};
+  data.forEach((item: any) => {
+    if (item.average_rating && item.CoffeeName) {
+      if (!ratings[item.CoffeeName]) {
+        ratings[item.CoffeeName] = { sum: 0, count: 0 };
+      }
+      ratings[item.CoffeeName].sum += parseFloat(item.average_rating);
+      ratings[item.CoffeeName].count += 1;
+    }
+  });
+  const averageRatings: { [key: string]: number } = {};
+  Object.keys(ratings).forEach((key) => {
+    averageRatings[key] = ratings[key].sum / ratings[key].count;
+  });
+  return averageRatings;
+};
+
 const HomeScreen = ({ navigation }: any) => {
   const CoffeeList = useStore((state: any) => state.CoffeeList);
   const BeanList = useStore((state: any) => state.BeanList);
@@ -59,6 +77,7 @@ const HomeScreen = ({ navigation }: any) => {
   const { user } = useAuth();
   const [address, setAddress] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [averageRatings, setAverageRatings] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
     const fetchAddress = async () => {
@@ -79,7 +98,18 @@ const HomeScreen = ({ navigation }: any) => {
       }
     };
 
+    const fetchAverageRatings = async () => {
+      try {
+        const response = await fetch('https://664d605aede9a2b556535a28.mockapi.io/CoffeeShop/CoffeeShop');
+        const data = await response.json();
+        setAverageRatings(calculateAverageRatings(data));
+      } catch (error) {
+        console.error('Error fetching average ratings:', error);
+      }
+    };
+
     fetchAddress();
+    fetchAverageRatings();
   }, [user?.email]);
 
   const [categories, setCategories] = useState(getCategoriesFromData(CoffeeList));
@@ -307,7 +337,7 @@ const HomeScreen = ({ navigation }: any) => {
                   imagelink_square={item.imagelink_square}
                   name={item.name}
                   special_ingredient={item.special_ingredient}
-                  average_rating={item.average_rating}
+                  average_rating={averageRatings[item.id] || 0}
                   price={item.prices[2]}
                   buttonPressHandler={CoffeCardAddToCart}
                 />
@@ -347,7 +377,7 @@ const HomeScreen = ({ navigation }: any) => {
                   imagelink_square={item.imagelink_square}
                   name={item.name}
                   special_ingredient={item.special_ingredient}
-                  average_rating={item.average_rating}
+                  average_rating={averageRatings[item.id] || 0}
                   price={item.prices[2]}
                   buttonPressHandler={CoffeCardAddToCart}
                 />
@@ -408,7 +438,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_semibold,
     color: COLORS.WoodBrown,
     textAlign: 'center',
-    marginBottom: SPACING.space_20,
   },
   InputContainerComponent: {
     flexDirection: 'row',

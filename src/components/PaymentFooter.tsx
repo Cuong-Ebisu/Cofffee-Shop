@@ -56,18 +56,18 @@ const styles = StyleSheet.create({
   PriceTitle: {
     fontFamily: FONTFAMILY.poppins_medium,
     fontSize: FONTSIZE.size_14,
-    color: COLORS.secondaryLightGreyHex,
+    color: COLORS.TuscanBrown,
   },
   PriceText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_24,
-    color: COLORS.primaryOrangeHex,
+    color: COLORS.SandyBrown,
   },
   Price: {
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.SandyBrown,
   },
   PayButton: {
-    backgroundColor: COLORS.primaryOrangeHex,
+    backgroundColor: COLORS.SandyBrown,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
