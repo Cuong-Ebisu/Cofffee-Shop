@@ -71,12 +71,12 @@ const styles = StyleSheet.create({
   HeaderTitle: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_16,
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.SpanishBistre,
   },
   HeaderSubtitle: {
     fontFamily: FONTFAMILY.poppins_light,
     fontSize: FONTSIZE.size_16,
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.SpanishBistre,
   },
   PriceContainer: {
     alignItems: 'flex-end',

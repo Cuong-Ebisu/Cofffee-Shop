@@ -34,6 +34,11 @@ const SideMenu: React.FC<SideMenuProps> = ({ onClose }) => {
     onClose();
   };
 
+  const handleMyWallet = () => {
+    navigation.navigate('MyWallet');
+    onClose();
+  };
+
   return (
     <View style={styles.sideMenuContainer}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
@@ -62,6 +67,13 @@ const SideMenu: React.FC<SideMenuProps> = ({ onClose }) => {
           style={styles.menuItemIcon}
         />
         <Text style={styles.menuItemText}>Edit API</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.menuItem} onPress={handleMyWallet}>
+        <Image
+          source={require('../assets/app_images/icons8-wallet-100.png')}  // Adjust the path as necessary
+          style={styles.menuItemIcon}
+        />
+        <Text style={styles.menuItemText}>My Wallet</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
         <Image
