@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import {
   BORDERRADIUS,
@@ -34,7 +34,7 @@ const PaymentFooter: React.FC<PaymentFooterProps> = ({
       </View>
       <TouchableOpacity
         style={styles.PayButton}
-        onPress={() => buttonPressHandler()}>
+        onPress={buttonPressHandler}>
         <Text style={styles.ButtonText}>{buttonTitle}</Text>
       </TouchableOpacity>
     </View>
@@ -56,18 +56,18 @@ const styles = StyleSheet.create({
   PriceTitle: {
     fontFamily: FONTFAMILY.poppins_medium,
     fontSize: FONTSIZE.size_14,
-    color: COLORS.TuscanBrown,
+    color: COLORS.secondaryLightGreyHex,
   },
   PriceText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_24,
-    color: COLORS.SandyBrown,
+    color: COLORS.primaryOrangeHex,
   },
   Price: {
-    color: COLORS.SandyBrown,
+    color: COLORS.SpanishBistre,
   },
   PayButton: {
-    backgroundColor: COLORS.SandyBrown,
+    backgroundColor: COLORS.primaryOrangeHex,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
