@@ -119,8 +119,8 @@ const CartItem: React.FC<CartItemProps> = ({
       ) : (
         <LinearGradient
           start={{x: 0, y: 0}}
-          end={{x: 1, y: 1}}
-          colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
+          end={{x: 1.5, y: 1.5}}
+          colors={[COLORS.WoodBrown, COLORS.WhiteSmoke]}
           style={styles.CartItemSingleLinearGradient}>
           <View>
             <Image
@@ -193,6 +193,8 @@ const styles = StyleSheet.create({
     gap: SPACING.space_12,
     padding: SPACING.space_12,
     borderRadius: BORDERRADIUS.radius_25,
+
+
   },
   CartItemRow: {
     flexDirection: 'row',
@@ -217,7 +219,7 @@ const styles = StyleSheet.create({
   CartItemSubtitle: {
     fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_12,
-    color: COLORS.secondaryLightGreyHex,
+    color: COLORS.SpanishBistre,
   },
   CartItemRoastedContainer: {
     height: 50,
@@ -225,7 +227,7 @@ const styles = StyleSheet.create({
     borderRadius: BORDERRADIUS.radius_15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.primaryDarkGreyHex,
+    backgroundColor: COLORS.WhiteSmoke,
   },
   CartItemRoastedText: {
     fontFamily: FONTFAMILY.poppins_regular,
@@ -246,16 +248,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   SizeBox: {
-    backgroundColor: COLORS.primaryBlackHex,
+    backgroundColor: COLORS.SpanishBistre,
     height: 40,
     width: 100,
     borderRadius: BORDERRADIUS.radius_10,
+    borderWidth: 2,
+    borderColor: COLORS.WoodBrown,
     justifyContent: 'center',
     alignItems: 'center',
   },
   SizeText: {
     fontFamily: FONTFAMILY.poppins_medium,
-    color: COLORS.secondaryLightGreyHex,
+    color: COLORS.primaryWhiteHex,
   },
   SizeCurrency: {
     fontFamily: FONTFAMILY.poppins_semibold,
@@ -271,11 +275,11 @@ const styles = StyleSheet.create({
     borderRadius: BORDERRADIUS.radius_10,
   },
   CartItemQuantityContainer: {
-    backgroundColor: COLORS.primaryBlackHex,
+    backgroundColor: COLORS.SpanishBistre,
     width: 80,
     borderRadius: BORDERRADIUS.radius_10,
     borderWidth: 2,
-    borderColor: COLORS.primaryOrangeHex,
+    borderColor: COLORS.WoodBrown,
     alignItems: 'center',
     paddingVertical: SPACING.space_4,
   },

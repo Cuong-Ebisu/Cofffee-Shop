@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     color: COLORS.primaryOrangeHex,
   },
   Price: {
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.SpanishBistre,
   },
   PayButton: {
     backgroundColor: COLORS.primaryOrangeHex,
