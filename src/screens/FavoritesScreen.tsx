@@ -7,14 +7,14 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {useStore} from '../store/store';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import {COLORS, SPACING} from '../theme/theme';
+import { useStore } from '../store/store';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { COLORS, SPACING, FONTFAMILY, FONTSIZE } from '../theme/theme';
 import HeaderBar from '../components/HeaderBar';
 import EmptyListAnimation from '../components/EmptyListAnimation';
 import FavoritesItemCard from '../components/FavoritesItemCard';
 
-const FavoritesScreen = ({navigation}: any) => {
+const FavoritesScreen = ({ navigation }: any) => {
   const FavoritesList = useStore((state: any) => state.FavoritesList);
   const tabBarHeight = useBottomTabBarHeight();
   const addToFavoriteList = useStore((state: any) => state.addToFavoriteList);
@@ -32,9 +32,9 @@ const FavoritesScreen = ({navigation}: any) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}>
         <View
-          style={[styles.ScrollViewInnerView, {marginBottom: tabBarHeight}]}>
+          style={[styles.ScrollViewInnerView, { marginBottom: tabBarHeight }]}>
           <View style={styles.ItemContainer}>
-            <HeaderBar title="Favourites" />
+            <HeaderBar title="Favourites"  />
 
             {FavoritesList.length == 0 ? (
               <EmptyListAnimation title={'No Favourites'} />
@@ -78,7 +78,7 @@ const FavoritesScreen = ({navigation}: any) => {
 const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
-    backgroundColor: COLORS.primaryBlackHex,
+    backgroundColor: COLORS.WhiteSmoke,
   },
   ScrollViewFlex: {
     flexGrow: 1,
@@ -93,6 +93,18 @@ const styles = StyleSheet.create({
   ListItemContainer: {
     paddingHorizontal: SPACING.space_20,
     gap: SPACING.space_20,
+  },
+  title: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_18,
+    color: COLORS.WoodBrown,
+    textAlign: 'center',
+    marginVertical: SPACING.space_20,
+  },
+  text: {
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_14,
+    color: COLORS.WoodBrown,
   },
 });
 

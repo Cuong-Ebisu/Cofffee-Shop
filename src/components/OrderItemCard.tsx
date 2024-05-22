@@ -29,8 +29,8 @@ const OrderItemCard: React.FC<OrderItemCardProps> = ({
   return (
     <LinearGradient
       start={{x: 0, y: 0}}
-      end={{x: 1, y: 1}}
-      colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
+      end={{x: 1.5, y: 1.5}}
+      colors={[COLORS.WoodBrown, COLORS.WhiteSmoke]}
       style={styles.CardLinearGradient}>
       <View style={styles.CardInfoContainer}>
         <View style={styles.CardImageInfoContainer}>
@@ -107,12 +107,12 @@ const styles = StyleSheet.create({
   CardTitle: {
     fontFamily: FONTFAMILY.poppins_medium,
     fontSize: FONTSIZE.size_18,
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.SpanishBistre,
   },
   CardSubtitle: {
     fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_12,
-    color: COLORS.secondaryLightGreyHex,
+    color: COLORS.SpanishBistre,
   },
   CardCurrency: {
     fontFamily: FONTFAMILY.poppins_semibold,
