@@ -67,6 +67,11 @@ interface Color {
   AliceBlue: string;
   SpanishBistre: string;
   CosmicLatte: string;
+  primaryLightWoodBrown: string;
+  TuscanBrown: string;
+  primaryLightSpanishBistre: string;
+  SandyBrown: string;
+  Bisque: string;
 }
 
 export const COLORS: Color = {
@@ -98,6 +103,11 @@ export const COLORS: Color = {
   AliceBlue: '#f0f8ff',
   SpanishBistre: '#80755a',
   CosmicLatte: '#fff8e7',
+  primaryLightWoodBrown: 'rgba(193, 154, 107, 0.5)',
+  TuscanBrown: '#6f4e37',
+  primaryLightSpanishBistre: 'rgba(128, 117, 90, 0.5)',
+  SandyBrown: '#f4a460',
+  Bisque: '#ffe4c4',
 };
 
 interface FontFamily {

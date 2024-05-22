@@ -17,6 +17,7 @@ import LocationScreen1 from './src/screens/LocationScreen1';
 import EnterLocationManually from './src/screens/EnterLocationManually';
 import Introduction1 from './src/screens/Introduction1';
 
+
 export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
