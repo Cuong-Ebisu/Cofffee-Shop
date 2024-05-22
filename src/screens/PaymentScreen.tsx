@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,8 @@ import {
   StatusBar,
   ScrollView,
   TouchableOpacity,
+  Image,
+  Alert,
 } from 'react-native';
 import {
   BORDERRADIUS,
@@ -19,14 +21,20 @@ import PaymentMethod from '../components/PaymentMethod';
 import PaymentFooter from '../components/PaymentFooter';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomIcon from '../components/CustomIcon';
-import {useStore} from '../store/store';
+import { useStore } from '../store/store';
 import PopUpAnimation from '../components/PopUpAnimation';
+import { useAuth } from './AuthContext';
 
 const PaymentList = [
   {
     name: 'Wallet',
-    icon: 'icon',
-    isIcon: true,
+    icon: require('../assets/app_images/icons8-wallet-1003.png'),
+    isIcon: false,
+  },
+  {
+    name: 'Momo',
+    icon: require('../assets/app_images/momo.png'),
+    isIcon: false,
   },
   {
     name: 'Google Pay',
@@ -45,16 +53,90 @@ const PaymentList = [
   },
 ];
 
-const PaymentScreen = ({navigation, route}: any) => {
+const PaymentScreen = ({ navigation, route }: any) => {
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
   const addToOrderHistoryListFromCart = useStore(
     (state: any) => state.addToOrderHistoryListFromCart,
   );
-
+  const { user } = useAuth();
   const [paymentMode, setPaymentMode] = useState('Credit Card');
   const [showAnimation, setShowAnimation] = useState(false);
+  const [walletAmount, setWalletAmount] = useState(0);
 
-  const buttonPressHandler = () => {
+  useEffect(() => {
+    const fetchWalletAmount = async () => {
+      try {
+        const response = await fetch(`https://664d605aede9a2b556535a28.mockapi.io/CoffeeShop/CoffeeShop?email=${user?.email}`);
+        const data = await response.json();
+        if (data.length > 0) {
+          setWalletAmount(data[0].amount || 0);
+        }
+      } catch (error) {
+        console.error('Error fetching wallet amount:', error);
+      }
+    };
+
+    fetchWalletAmount();
+  }, [user?.email]);
+
+  const buttonPressHandler = async () => {
+    if (paymentMode === 'Wallet' && walletAmount < route.params.amount) {
+      Alert.alert('Insufficient Funds', 'You do not have enough funds in your wallet.');
+      return;
+    }
+
+    let updatedAmount = walletAmount;
+
+    if (paymentMode === 'Wallet') {
+      try {
+        const response = await fetch(`https://664d605aede9a2b556535a28.mockapi.io/CoffeeShop/CoffeeShop?email=${user?.email}`);
+        const data = await response.json();
+        if (data.length > 0) {
+          const existingEntry = data[0];
+          updatedAmount = existingEntry.amount ? parseFloat(existingEntry.amount) - parseFloat(route.params.amount) : 0;
+
+          await fetch(`https://664d605aede9a2b556535a28.mockapi.io/CoffeeShop/CoffeeShop/${existingEntry.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              amount: updatedAmount,
+              points: (existingEntry.points || 0) + Math.floor(route.params.amount / 10),
+            }),
+          });
+
+          setWalletAmount(updatedAmount);
+        }
+      } catch (error) {
+        console.error('Error updating wallet amount:', error);
+        Alert.alert('Error', 'There was an error processing your payment.');
+        return;
+      }
+    } else {
+      try {
+        const response = await fetch(`https://664d605aede9a2b556535a28.mockapi.io/CoffeeShop/CoffeeShop?email=${user?.email}`);
+        const data = await response.json();
+        if (data.length > 0) {
+          const existingEntry = data[0];
+
+          await fetch(`https://664d605aede9a2b556535a28.mockapi.io/CoffeeShop/CoffeeShop/${existingEntry.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              points: (existingEntry.points || 0) + Math.floor(route.params.amount / 10),
+            }),
+          });
+        }
+      } catch (error) {
+        console.error('Error updating points:', error);
+        Alert.alert('Error', 'There was an error processing your payment.');
+        return;
+      }
+    }
+
     setShowAnimation(true);
     addToOrderHistoryListFromCart();
     calculateCartPrice();
@@ -73,9 +155,7 @@ const PaymentScreen = ({navigation, route}: any) => {
           style={styles.LottieAnimation}
           source={require('../lottie/successful.json')}
         />
-      ) : (
-        <></>
-      )}
+      ) : null}
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -105,27 +185,27 @@ const PaymentScreen = ({navigation, route}: any) => {
                 styles.CreditCardContainer,
                 {
                   borderColor:
-                    paymentMode == 'Credit Card'
+                    paymentMode === 'Credit Card'
                       ? COLORS.primaryOrangeHex
-                      : COLORS.primaryGreyHex,
+                      : COLORS.OtterBrown,
                 },
               ]}>
               <Text style={styles.CreditCardTitle}>Credit Card</Text>
               <View style={styles.CreditCardBG}>
                 <LinearGradient
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 1}}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 2, y: 1 }}
                   style={styles.LinearGradientStyle}
-                  colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}>
+                  colors={[COLORS.WoodBrown, COLORS.WhiteSmoke]}>
                   <View style={styles.CreditCardRow}>
                     <CustomIcon
                       name="chip"
-                      size={FONTSIZE.size_20 * 2}
+                      size={FONTSIZE.size_10}
                       color={COLORS.primaryOrangeHex}
                     />
                     <CustomIcon
                       name="visa"
-                      size={FONTSIZE.size_30 * 2}
+                      size={FONTSIZE.size_10}
                       color={COLORS.primaryWhiteHex}
                     />
                   </View>
@@ -141,7 +221,7 @@ const PaymentScreen = ({navigation, route}: any) => {
                         Card Holder Name
                       </Text>
                       <Text style={styles.CreditCardNameTitle}>
-                        Robert Evans
+                        HUYNH ANH DUNG
                       </Text>
                     </View>
                     <View style={styles.CreditCardDateContainer}>
@@ -167,6 +247,15 @@ const PaymentScreen = ({navigation, route}: any) => {
                 icon={data.icon}
                 isIcon={data.isIcon}
               />
+              {data.name === 'Wallet' && paymentMode === 'Wallet' && (
+                <Text style={styles.walletAmountText}>${walletAmount}</Text>
+              )}
+              {paymentMode === 'Momo' && data.name === 'Momo' && (
+                <Image
+                  source={require('../assets/app_images/momo_qr.png')}
+                  style={styles.QRCode}
+                />
+              )}
             </TouchableOpacity>
           ))}
         </View>
@@ -174,7 +263,7 @@ const PaymentScreen = ({navigation, route}: any) => {
 
       <PaymentFooter
         buttonTitle={`Pay with ${paymentMode}`}
-        price={{price: route.params.amount, currency: '$'}}
+        price={{ price: route.params.amount, currency: '$' }}
         buttonPressHandler={buttonPressHandler}
       />
     </View>
@@ -184,7 +273,7 @@ const PaymentScreen = ({navigation, route}: any) => {
 const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
-    backgroundColor: COLORS.primaryBlackHex,
+    backgroundColor: COLORS.WhiteSmoke,
   },
   LottieAnimation: {
     flex: 1,
@@ -202,7 +291,7 @@ const styles = StyleSheet.create({
   HeaderText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_20,
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.primaryOrangeHex,
   },
   EmptyView: {
     height: SPACING.space_36,
@@ -217,11 +306,12 @@ const styles = StyleSheet.create({
     gap: SPACING.space_10,
     borderRadius: BORDERRADIUS.radius_15 * 2,
     borderWidth: 3,
+    borderColor: COLORS.SpanishBistre,
   },
   CreditCardTitle: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_14,
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.primaryOrangeHex,
     marginLeft: SPACING.space_10,
   },
   CreditCardBG: {
@@ -253,7 +343,7 @@ const styles = StyleSheet.create({
   CreditCardNameSubitle: {
     fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_12,
-    color: COLORS.secondaryLightGreyHex,
+    color: COLORS.SpanishBistre,
   },
   CreditCardNameTitle: {
     fontFamily: FONTFAMILY.poppins_medium,
@@ -265,6 +355,19 @@ const styles = StyleSheet.create({
   },
   CreditCardDateContainer: {
     alignItems: 'flex-end',
+  },
+  walletAmountText: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_16,
+    color: COLORS.primaryOrangeHex,
+    textAlign: 'right',
+    paddingRight: SPACING.space_10,
+  },
+  QRCode: {
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
+    marginVertical: SPACING.space_20,
   },
 });
 

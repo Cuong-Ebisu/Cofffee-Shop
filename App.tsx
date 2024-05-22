@@ -18,7 +18,7 @@ import EnterLocationManually from './src/screens/EnterLocationManually';
 import Introduction1 from './src/screens/Introduction1';
 import CardScreen  from './src/screens/CardScreen';
 import MyWalletScreen  from './src/screens/MyWalletScreen';
-
+import PointScreen  from './src/screens/PointScreen';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -34,6 +34,7 @@ export type RootStackParamList = {
   Introduction: undefined; 
   MyWallet:undefined; 
   CardScreen: undefined; 
+  PointScreen: undefined; 
 
 };
 
@@ -73,6 +74,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Introduction" component={Introduction1} /> 
         <Stack.Screen name="MyWallet" component={MyWalletScreen} />
         <Stack.Screen name="CardScreen" component={CardScreen} />
+        <Stack.Screen name="PointScreen" component={PointScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -39,6 +39,11 @@ const SideMenu: React.FC<SideMenuProps> = ({ onClose }) => {
     onClose();
   };
 
+  const handlePoints = () => {
+    navigation.navigate('PointScreen');
+    onClose();
+  };
+
   return (
     <View style={styles.sideMenuContainer}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
@@ -74,6 +79,13 @@ const SideMenu: React.FC<SideMenuProps> = ({ onClose }) => {
           style={styles.menuItemIcon}
         />
         <Text style={styles.menuItemText}>My Wallet</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.menuItem} onPress={handlePoints}>
+        <Image
+          source={require('../assets/app_images/icons8-point-spread-100.png')}  // Adjust the path as necessary
+          style={styles.menuItemIcon}
+        />
+        <Text style={styles.menuItemText}>Points</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
         <Image
