@@ -18,7 +18,7 @@ interface FavoritesItemCardProps {
   type: string;
   ingredients: string;
   average_rating: number;
-  ratings_count: string;
+  ratings_count: number;
   roasted: string;
   description: string;
   favourite: boolean;
@@ -58,7 +58,7 @@ const FavoritesItemCard: React.FC<FavoritesItemCardProps> = ({
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
+        colors={[COLORS.WoodBrown, COLORS.WhiteSmoke]}
         style={styles.ContainerLinearGradient}>
         <Text style={styles.DescriptionTitle}>Description</Text>
         <Text style={styles.DescriptionText}>{description}</Text>
@@ -71,20 +71,32 @@ const styles = StyleSheet.create({
   CardContainer: {
     borderRadius: BORDERRADIUS.radius_25,
     overflow: 'hidden',
+    backgroundColor: COLORS.SpanishBistre,
   },
   ContainerLinearGradient: {
     gap: SPACING.space_10,
     padding: SPACING.space_20,
+    backgroundColor: COLORS.SpanishBistre,
   },
   DescriptionTitle: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_16,
-    color: COLORS.secondaryLightGreyHex,
+    color: COLORS.SpanishBistre,
   },
   DescriptionText: {
     fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_14,
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.SpanishBistre,
+  },
+  RoastedContainer: {
+      height: 55,
+      width: 55 * 2 + SPACING.space_20,
+      borderRadius: BORDERRADIUS.radius_15,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: COLORS.SpanishBistre,
+      borderWidth: 2,
+      borderColor: COLORS.WoodBrown,
   },
 });
 

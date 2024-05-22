@@ -29,8 +29,8 @@ const OrderItemCard: React.FC<OrderItemCardProps> = ({
   return (
     <LinearGradient
       start={{x: 0, y: 0}}
-      end={{x: 1, y: 1}}
-      colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
+      end={{x: 1.5, y: 1.5}}
+      colors={[COLORS.WoodBrown, COLORS.WhiteSmoke]}
       style={styles.CardLinearGradient}>
       <View style={styles.CardInfoContainer}>
         <View style={styles.CardImageInfoContainer}>
@@ -88,16 +88,20 @@ const styles = StyleSheet.create({
     gap: SPACING.space_20,
     padding: SPACING.space_20,
     borderRadius: BORDERRADIUS.radius_25,
+    borderColor: COLORS.SpanishBistre,
   },
   CardInfoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderRadius: BORDERRADIUS.radius_25,
+    borderColor: COLORS.SpanishBistre,
   },
   CardImageInfoContainer: {
     flexDirection: 'row',
     gap: SPACING.space_20,
     alignItems: 'center',
+
   },
   Image: {
     height: 90,
@@ -107,12 +111,12 @@ const styles = StyleSheet.create({
   CardTitle: {
     fontFamily: FONTFAMILY.poppins_medium,
     fontSize: FONTSIZE.size_18,
-    color: COLORS.primaryWhiteHex,
+    color: COLORS.SpanishBistre,
   },
   CardSubtitle: {
     fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_12,
-    color: COLORS.secondaryLightGreyHex,
+    color: COLORS.SpanishBistre,
   },
   CardCurrency: {
     fontFamily: FONTFAMILY.poppins_semibold,
@@ -129,7 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   SizeBoxLeft: {
-    backgroundColor: COLORS.primaryBlackHex,
+    backgroundColor: COLORS.SpanishBistre,
     height: 45,
     flex: 1,
     borderTopLeftRadius: BORDERRADIUS.radius_10,
@@ -137,14 +141,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRightWidth: 1,
-    borderRightColor: COLORS.primaryGreyHex,
+    borderRightColor: COLORS.WoodBrown,
   },
   SizeText: {
     fontFamily: FONTFAMILY.poppins_medium,
-    color: COLORS.secondaryLightGreyHex,
+    color: COLORS.primaryWhiteHex,
   },
   PriceBoxRight: {
-    backgroundColor: COLORS.primaryBlackHex,
+    backgroundColor: COLORS.SpanishBistre,
     height: 45,
     flex: 1,
     borderTopRightRadius: BORDERRADIUS.radius_10,
@@ -152,7 +156,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderLeftWidth: 1,
-    borderLeftColor: COLORS.primaryGreyHex,
+    borderLeftColor: COLORS.WoodBrown,
   },
   PriceCurrency: {
     fontFamily: FONTFAMILY.poppins_semibold,

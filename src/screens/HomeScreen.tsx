@@ -211,7 +211,7 @@ const HomeScreen = ({ navigation }: any) => {
             </View>
           </View>
           <Text style={styles.ScreenTitle}>
-            Find the best{'\n'}coffee for you
+            Discover Your Perfect Coffee
           </Text>
 
           {/* Search Input */}

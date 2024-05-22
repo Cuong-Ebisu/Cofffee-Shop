@@ -16,6 +16,8 @@ import UserProfile from './src/screens/UserProfile';
 import LocationScreen1 from './src/screens/LocationScreen1';
 import EnterLocationManually from './src/screens/EnterLocationManually';
 import Introduction1 from './src/screens/Introduction1';
+import CardScreen  from './src/screens/CardScreen';
+import MyWalletScreen  from './src/screens/MyWalletScreen';
 
 
 export type RootStackParamList = {
@@ -30,6 +32,9 @@ export type RootStackParamList = {
   LocationScreen1: undefined;
   EnterLocationManually: undefined;
   Introduction: undefined; 
+  MyWallet:undefined; 
+  CardScreen: undefined; 
+
 };
 
 const Stack = createNativeStackNavigator();
@@ -66,6 +71,8 @@ const AppNavigator = () => {
         <Stack.Screen name="LocationScreen1" component={LocationScreen1} />
         <Stack.Screen name="EnterLocationManually" component={EnterLocationManually} />
         <Stack.Screen name="Introduction" component={Introduction1} /> 
+        <Stack.Screen name="MyWallet" component={MyWalletScreen} />
+        <Stack.Screen name="CardScreen" component={CardScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
