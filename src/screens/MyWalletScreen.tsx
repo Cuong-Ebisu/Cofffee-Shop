@@ -84,7 +84,7 @@ const MyWalletScreen = () => {
       </TouchableOpacity>
       <Text style={styles.headerTitle}>My Wallet</Text>
       <Text style={styles.subTitle}>Manage your wallet and recharge easily.</Text>
-      <Text style={styles.balanceLabel}>Current Balance: ${currentBalance}</Text>
+      <Text style={styles.balanceLabel}>Current Balance: ${currentBalance.toFixed(2)}</Text>
       <Text style={styles.label}>Enter Amount ($)</Text>
       <TextInput
         style={styles.input}
