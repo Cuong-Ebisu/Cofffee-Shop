@@ -277,7 +277,7 @@ const PaymentScreen = ({ navigation, route }: any) => {
                 isIcon={data.isIcon}
               />
               {data.name === 'Wallet' && paymentMode === 'Wallet' && (
-                <Text style={styles.walletAmountText}>${walletAmount}</Text>
+                <Text style={styles.walletAmountText}>${walletAmount.toFixed(2)}</Text>
               )}
               {paymentMode === 'Momo' && data.name === 'Momo' && (
                 <Image
@@ -309,6 +309,9 @@ const PaymentScreen = ({ navigation, route }: any) => {
               style={styles.PayButton}
               onPress={handlePayment}>
               <Text style={styles.ButtonText}>Pay</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.closeModalButton} onPress={() => setShowReceipt(false)}>
+              <Text style={styles.closeModalButtonText}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -453,6 +456,18 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_18,
     color: COLORS.primaryWhiteHex,
+  },
+  closeModalButton: {
+    marginTop: SPACING.space_20,
+    backgroundColor: COLORS.primaryOrangeHex,
+    paddingVertical: SPACING.space_10,
+    borderRadius: SPACING.space_10,
+    alignItems: 'center',
+  },
+  closeModalButtonText: {
+    fontSize: FONTSIZE.size_18,
+    color: COLORS.primaryWhiteHex,
+    fontWeight: 'bold',
   },
 });
 
