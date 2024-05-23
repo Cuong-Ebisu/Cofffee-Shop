@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, TextInput, Alert, Modal, FlatList, ListRenderItem } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, TextInput, Alert, Modal, FlatList, ListRenderItem, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { COLORS, SPACING, FONTSIZE } from '../theme/theme';
+import { COLORS, SPACING, FONTSIZE, FONTFAMILY } from '../theme/theme';
 import { useAuth } from './AuthContext'; // Adjust the path as necessary
 
 interface FeedbackItem {
@@ -112,18 +112,20 @@ const HelpScreen: React.FC = () => {
       </TouchableOpacity>
       
       <Modal visible={showFeedbackModal} animationType="slide" transparent>
+        <TouchableWithoutFeedback onPress={() => setShowFeedbackModal(false)}>
+          <View style={styles.modalOverlay} />
+        </TouchableWithoutFeedback>
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Feedback List</Text>
-            <FlatList
-              data={feedbackList}
-              renderItem={renderFeedbackItem}
-              keyExtractor={(item) => item.id}
-            />
-            <TouchableOpacity style={styles.closeModalButton} onPress={() => setShowFeedbackModal(false)}>
-              <Text style={styles.closeModalButtonText}>Close</Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.modalTitle}>Feedback List</Text>
+          <FlatList
+            data={feedbackList}
+            renderItem={renderFeedbackItem}
+            keyExtractor={(item) => item.id}
+            style={styles.feedbackList}
+          />
+          <TouchableOpacity style={styles.closeModalButton} onPress={() => setShowFeedbackModal(false)}>
+            <Text style={styles.closeModalButtonText}>Close</Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     </ScrollView>
@@ -203,17 +205,15 @@ const styles = StyleSheet.create({
     color: COLORS.primaryWhiteHex,
     fontWeight: 'bold',
   },
-  modalContainer: {
+  modalOverlay: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  modalContent: {
-    width: '80%',
+  modalContainer: {
     backgroundColor: COLORS.primaryWhiteHex,
-    padding: SPACING.space_20,
+    margin: SPACING.space_20,
     borderRadius: SPACING.space_10,
+    padding: SPACING.space_20,
   },
   modalTitle: {
     fontSize: FONTSIZE.size_20,
@@ -230,6 +230,9 @@ const styles = StyleSheet.create({
   feedbackItemText: {
     fontSize: FONTSIZE.size_16,
     color: COLORS.primaryWhiteHex,
+  },
+  feedbackList: {
+    maxHeight: 200,
   },
   closeModalButton: {
     marginTop: SPACING.space_20,

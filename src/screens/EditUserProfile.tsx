@@ -1,118 +1,126 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, Modal, FlatList, Alert, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Modal, TouchableWithoutFeedback, Alert } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { COLORS, SPACING, FONTSIZE, FONTFAMILY } from '../theme/theme';
 import { RootStackParamList } from '../../App';  // Adjust the path as necessary
 import { useAuth } from './AuthContext';
 
-interface FeedbackItem {
-  id: string;
-  email: string;
-  feedback: string;
-}
-
-const HelpScreen: React.FC = () => {
+const EditUserProfile = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { user } = useAuth();
-  const [feedback, setFeedback] = useState('');
-  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
-  const [feedbackList, setFeedbackList] = useState<FeedbackItem[]>([]);
+  const [gender, setGender] = useState<string | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const handleBackPress = () => {
-    navigation.goBack();
+    navigation.navigate('Tab');
   };
 
-  const handleSendFeedback = async () => {
-    if (!feedback.trim()) {
-      Alert.alert('Error', 'Please enter your feedback.');
-      return;
-    }
+  const handleGenderSelect = (selectedGender: string) => {
+    setGender(selectedGender);
+    setModalVisible(false);
+  };
 
-    try {
-      const response = await fetch('https://664d605aede9a2b556535a28.mockapi.io/CoffeeShop/CoffeeShop', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: user?.email,
-          feedback: feedback.trim(),
-        }),
-      });
+  const handleCompleteProfile = async () => {
+    if (user?.email) {
+      const profileData = {
+        email: user.email,
+        name,
+        phoneNumber,
+        gender,
+      };
 
-      if (response.ok) {
-        Alert.alert('Success', 'Your feedback has been sent.');
-        setFeedback('');
-      } else {
-        Alert.alert('Error', 'Failed to send feedback.');
+      try {
+        const response = await fetch(`https://6606e9f2be53febb857ee01e.mockapi.io/Coffeeshop?email=${user.email}`);
+        const data = await response.json();
+        if (data.length === 0) {
+          await fetch('https://6606e9f2be53febb857ee01e.mockapi.io/Coffeeshop', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(profileData),
+          });
+        } else {
+          const existingUser = data[0];
+          await fetch(`https://6606e9f2be53febb857ee01e.mockapi.io/Coffeeshop/${existingUser.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(profileData),
+          });
+        }
+        Alert.alert("Profile Updated", "Your profile has been updated successfully.");
+        navigation.navigate('Tab');
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        Alert.alert("Error", "There was an error updating your profile. Please try again.");
       }
-    } catch (error) {
-      console.error('Error sending feedback:', error);
-      Alert.alert('Error', 'An error occurred while sending your feedback.');
+    } else {
+      Alert.alert("Error", "No logged-in user found.");
     }
   };
 
-  const handleViewFeedback = async () => {
-    try {
-      const response = await fetch(`https://664d605aede9a2b556535a28.mockapi.io/CoffeeShop/CoffeeShop?email=${user?.email}`);
-      const data: FeedbackItem[] = await response.json();
-      setFeedbackList(data);
-      setShowFeedbackModal(true);
-    } catch (error) {
-      console.error('Error fetching feedback:', error);
-      Alert.alert('Error', 'An error occurred while fetching your feedback.');
-    }
+  const handleLocationAccess = () => {
+    navigation.navigate('LocationScreen1');
   };
-
-  const renderFeedbackItem = ({ item }: { item: FeedbackItem }) => (
-    <View style={styles.feedbackItem}>
-      <Text style={styles.feedbackItemText}>{item.feedback}</Text>
-    </View>
-  );
 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
         <Image source={require('../assets/app_images/icons8-left-arrow-100.png')} style={styles.backIcon} />
       </TouchableOpacity>
-      <Text style={styles.headerTitle}>Help & Support</Text>
+      <Text style={styles.headerTitle}>Complete Your Profile</Text>
       <Text style={styles.subTitle}>
-        If you have any questions or need further assistance, please reach out to our support team.
+        Don’t worry, only you can see your personal data. No one else will be able to see it.
       </Text>
-      <Text style={styles.contactText}>Email: 211110390@student.hcmute.edu.vn</Text>
-      <Text style={styles.contactText}>Phone: 0703065317</Text>
-
-      <Text style={styles.sectionTitle}>Feedback</Text>
-      <Text style={styles.contactText}>We value your feedback! Please let us know how we can improve your experience:</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your feedback here"
+      <View style={styles.avatarContainer}>
+        <Image source={require('../assets/app_images/account1.jpg')} style={styles.avatar} />
+      </View>
+      <TextInput 
+        style={styles.input} 
+        placeholder="Ex. John Doe" 
         placeholderTextColor={COLORS.lightGrey}
-        value={feedback}
-        onChangeText={setFeedback}
-        multiline
+        onChangeText={setName}
+        value={name}
       />
-      <TouchableOpacity style={styles.completeButton} onPress={handleSendFeedback}>
-        <Text style={styles.completeButtonText}>Send Feedback</Text>
+      <TextInput 
+        style={styles.input} 
+        placeholder="Enter Phone Number" 
+        keyboardType="phone-pad" 
+        placeholderTextColor={COLORS.lightGrey}
+        onChangeText={setPhoneNumber}
+        value={phoneNumber}
+      />
+      <TouchableOpacity style={styles.genderSelect} onPress={() => setModalVisible(true)}>
+        <Text style={styles.genderText}>{gender ? gender : 'Select Gender'}</Text>
+        <Image source={require('../assets/app_images/icons8-dropdown-50.png')} style={styles.dropdownIcon} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.completeButton} onPress={handleViewFeedback}>
-        <Text style={styles.completeButtonText}>View Feedback</Text>
+      <TouchableOpacity style={styles.locationButton} onPress={handleLocationAccess}>
+        <Text style={styles.locationButtonText}>Access Location Settings</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.completeButton} onPress={handleCompleteProfile}>
+        <Text style={styles.completeButtonText}>Complete Profile</Text>
       </TouchableOpacity>
 
-      <Modal visible={showFeedbackModal} animationType="slide" transparent onRequestClose={() => setShowFeedbackModal(false)}>
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>Feedback List</Text>
-            <FlatList
-              data={feedbackList}
-              renderItem={renderFeedbackItem}
-              keyExtractor={(item) => item.id}
-              style={styles.feedbackList}
-            />
-            <TouchableOpacity style={styles.closeModalButton} onPress={() => setShowFeedbackModal(false)}>
-              <Text style={styles.closeModalButtonText}>Close</Text>
-            </TouchableOpacity>
-          </View>
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.modalOverlay} />
+        </TouchableWithoutFeedback>
+        <View style={styles.modalContainer}>
+          <TouchableOpacity style={styles.modalOption} onPress={() => handleGenderSelect('Male')}>
+            <Text style={styles.modalOptionText}>Male</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.modalOption} onPress={() => handleGenderSelect('Female')}>
+            <Text style={styles.modalOptionText}>Female</Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>
@@ -146,23 +154,34 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: SPACING.space_30,
   },
-  contactText: {
-    fontSize: FONTSIZE.size_16,
-    fontFamily: FONTFAMILY.regular,
-    color: COLORS.darkGrey,
-    textAlign: 'center',
-    marginBottom: SPACING.space_10,
+  avatarContainer: {
+    alignItems: 'center',
+    marginBottom: SPACING.space_20,
   },
-  sectionTitle: {
-    fontSize: FONTSIZE.size_20,
-    fontFamily: FONTFAMILY.bold,
-    color: COLORS.black,
-    textAlign: 'center',
-    marginTop: SPACING.space_20,
-    marginBottom: SPACING.space_10,
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: COLORS.lightGrey,
+  },
+  editIconContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: COLORS.WoodBrown,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  editIcon: {
+    width: 16,
+    height: 16,
+    tintColor: COLORS.white,
   },
   input: {
-    height: 100,
+    height: 50,
     borderColor: COLORS.lightGrey,
     borderWidth: 1,
     borderRadius: SPACING.space_10,
@@ -171,7 +190,40 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.regular,
     color: COLORS.black,
     marginBottom: SPACING.space_20,
-    textAlignVertical: 'top',
+  },
+  genderSelect: {
+    height: 50,
+    borderColor: COLORS.lightGrey,
+    borderWidth: 1,
+    borderRadius: SPACING.space_10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: SPACING.space_10,
+    marginBottom: SPACING.space_20,
+  },
+  genderText: {
+    fontSize: FONTSIZE.size_16,
+    fontFamily: FONTFAMILY.regular,
+    color: COLORS.black,
+  },
+  dropdownIcon: {
+    width: 24,
+    height: 24,
+    tintColor: COLORS.lightGrey,
+  },
+  locationButton: {
+    height: 50,
+    borderRadius: SPACING.space_10,
+    backgroundColor: COLORS.WoodBrown, // You can change the color as needed
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: SPACING.space_20,
+  },
+  locationButtonText: {
+    fontSize: FONTSIZE.size_16,
+    fontFamily: FONTFAMILY.bold,
+    color: COLORS.white,
   },
   completeButton: {
     height: 50,
@@ -179,7 +231,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WoodBrown,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: SPACING.space_20,
   },
   completeButtonText: {
     fontSize: FONTSIZE.size_16,
@@ -188,54 +239,23 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContainer: {
-    width: '90%',
-    maxHeight: '80%',
     backgroundColor: COLORS.white,
-    borderRadius: SPACING.space_20,
-    padding: SPACING.space_20,
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: FONTSIZE.size_20,
-    fontFamily: FONTFAMILY.bold,
-    color: COLORS.black,
-    marginBottom: SPACING.space_20,
-  },
-  feedbackList: {
-    width: '100%',
-    backgroundColor: COLORS.white,
-  },
-  feedbackItem: {
-    backgroundColor: COLORS.lightGrey,
+    margin: SPACING.space_20,
     borderRadius: SPACING.space_10,
-    padding: SPACING.space_10,
-    marginBottom: SPACING.space_10,
-    width: '100%',
+    padding: SPACING.space_20,
   },
-  feedbackItemText: {
+  modalOption: {
+    paddingVertical: SPACING.space_10,
+  },
+  modalOptionText: {
     fontSize: FONTSIZE.size_16,
     fontFamily: FONTFAMILY.regular,
     color: COLORS.black,
-  },
-  closeModalButton: {
-    width: '100%',
-    height: 50,
-    borderRadius: SPACING.space_10,
-    backgroundColor: COLORS.WoodBrown,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: SPACING.space_20,
-  },
-  closeModalButtonText: {
-    fontSize: FONTSIZE.size_16,
-    fontFamily: FONTFAMILY.bold,
-    color: COLORS.white,
+    textAlign: 'center',
   },
 });
 
-export default HelpScreen;
+export default EditUserProfile;

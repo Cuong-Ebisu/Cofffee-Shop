@@ -52,7 +52,7 @@ const MyWalletScreen = () => {
             }),
           });
 
-          Alert.alert('Nạp tiền thành công', `Bạn đã nạp $${amount}`);
+          Alert.alert('Top-up Successful', `You have topped up $${amount}`);
           setCurrentBalance(updatedAmount);
         } else {
           await fetch('https://664d605aede9a2b556535a28.mockapi.io/CoffeeShop/CoffeeShop', {
@@ -66,7 +66,7 @@ const MyWalletScreen = () => {
             }),
           });
 
-          Alert.alert('Nạp tiền thành công', `Bạn đã nạp $${amount}`);
+          Alert.alert('Top-up Successful', `You have topped up $${amount}`);
           setCurrentBalance(parseFloat(amount));
         }
 

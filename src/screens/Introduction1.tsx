@@ -30,7 +30,7 @@ const Introduction1 = () => {
           <Text style={styles.getStartedButtonText}>Let's Get Started</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleSignInPress}>
-          <Text style={styles.signInText}>Already have an account? <Text style={styles.signInLink}>Sign In</Text></Text>
+          <Text style={styles.signInText}>Already have an account? <Text style={styles.signInLink}>Sign Up</Text></Text>
         </TouchableOpacity>
       </View>
     </View>

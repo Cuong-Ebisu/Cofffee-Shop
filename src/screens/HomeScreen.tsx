@@ -126,7 +126,7 @@ const HomeScreen = ({ navigation }: any) => {
   const tabBarHeight = useBottomTabBarHeight();
 
   const searchCoffee = (search: string) => {
-    if (search != '') {
+    if (search) {
       ListRef?.current?.scrollToOffset({
         animated: true,
         offset: 0,
@@ -134,7 +134,7 @@ const HomeScreen = ({ navigation }: any) => {
       setCategoryIndex({ index: 0, category: categories[0] });
       setSortedCoffee([
         ...CoffeeList.filter((item: any) =>
-          item.name.toLowerCase().includes(search.toLowerCase())
+          item.name?.toLowerCase().includes(search.toLowerCase())
         ),
       ]);
     }

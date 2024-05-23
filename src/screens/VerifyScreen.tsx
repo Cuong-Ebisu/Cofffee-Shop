@@ -16,7 +16,7 @@ const VerifyScreen = () => {
   const handleVerify = () => {
     if (inputOtp === otp) {
       Alert.alert("Verification Successful", "You have been successfully signed up.");
-      navigation.navigate('Home');
+      navigation.navigate('Login');
     } else {
       Alert.alert("Verification Error", "Invalid OTP. Please try again.");
     }
