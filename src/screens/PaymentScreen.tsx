@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  Modal,
 } from 'react-native';
 import {
   BORDERRADIUS,
@@ -62,6 +63,8 @@ const PaymentScreen = ({ navigation, route }: any) => {
   const [paymentMode, setPaymentMode] = useState('Credit Card');
   const [showAnimation, setShowAnimation] = useState(false);
   const [walletAmount, setWalletAmount] = useState(0);
+  const [profile, setProfile] = useState<any>(null);
+  const [showReceipt, setShowReceipt] = useState(false);
 
   useEffect(() => {
     const fetchWalletAmount = async () => {
@@ -76,10 +79,36 @@ const PaymentScreen = ({ navigation, route }: any) => {
       }
     };
 
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch(`https://6606e9f2be53febb857ee01e.mockapi.io/Coffeeshop?email=${user?.email}`);
+        const data = await response.json();
+        if (data.length > 0) {
+          setProfile(data[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    };
+
     fetchWalletAmount();
+    fetchProfile();
   }, [user?.email]);
 
+  const checkProfileCompletion = (profile: any) => {
+    return profile?.name && profile?.phoneNumber && profile?.gender && profile?.address;
+  };
+
   const buttonPressHandler = async () => {
+    if (!checkProfileCompletion(profile)) {
+      Alert.alert('Incomplete Profile', 'Your profile information is incomplete.');
+      return;
+    }
+
+    setShowReceipt(true);
+  };
+
+  const handlePayment = async () => {
     if (paymentMode === 'Wallet' && walletAmount < route.params.amount) {
       Alert.alert('Insufficient Funds', 'You do not have enough funds in your wallet.');
       return;
@@ -266,6 +295,24 @@ const PaymentScreen = ({ navigation, route }: any) => {
         price={{ price: route.params.amount, currency: '$' }}
         buttonPressHandler={buttonPressHandler}
       />
+
+      <Modal visible={showReceipt} animationType="slide" transparent>
+        <View style={styles.ReceiptContainer}>
+          <View style={styles.ReceiptContent}>
+            <Text style={styles.ReceiptTitle}>Receipt</Text>
+            <Text style={styles.ReceiptText}>Name: {profile?.name}</Text>
+            <Text style={styles.ReceiptText}>Phone: {profile?.phoneNumber}</Text>
+            <Text style={styles.ReceiptText}>Gender: {profile?.gender}</Text>
+            <Text style={styles.ReceiptText}>Address: {profile?.address}</Text>
+            <Text style={styles.ReceiptText}>Amount: ${route.params.amount}</Text>
+            <TouchableOpacity
+              style={styles.PayButton}
+              onPress={handlePayment}>
+              <Text style={styles.ButtonText}>Pay</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -368,6 +415,44 @@ const styles = StyleSheet.create({
     height: 200,
     alignSelf: 'center',
     marginVertical: SPACING.space_20,
+  },
+  ReceiptContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  ReceiptContent: {
+    width: '80%',
+    padding: SPACING.space_20,
+    backgroundColor: COLORS.primaryWhiteHex,
+    borderRadius: BORDERRADIUS.radius_20,
+  },
+  ReceiptTitle: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_20,
+    color: COLORS.primaryBlackHex,
+    marginBottom: SPACING.space_10,
+    textAlign: 'center',
+  },
+  ReceiptText: {
+    fontFamily: FONTFAMILY.poppins_regular,
+    fontSize: FONTSIZE.size_16,
+    color: COLORS.primaryBlackHex,
+    marginVertical: SPACING.space_15,
+  },
+  PayButton: {
+    backgroundColor: COLORS.primaryOrangeHex,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: SPACING.space_36 * 2,
+    borderRadius: BORDERRADIUS.radius_20,
+    marginTop: SPACING.space_20,
+  },
+  ButtonText: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_18,
+    color: COLORS.primaryWhiteHex,
   },
 });
 
